@@ -13,8 +13,17 @@ class FoodModel {
   @JsonKey(name: 'thumbnail')
   String? thumbnail;
 
+  @JsonKey(name: 'thumbnailone')
+  String? thumbnailOne;
+
   @JsonKey(name: 'decscription')
   String? description;
+
+  @JsonKey(name: 'decscriptionone')
+  String? descriptionOne;
+
+  @JsonKey(name: 'date')
+  String? currentDay;
 
   FoodModel();
 

@@ -7,5 +7,4 @@ class MainVM extends BaseViewModel {
   void onInit() {
     print("MainVM");
   }
-
 }

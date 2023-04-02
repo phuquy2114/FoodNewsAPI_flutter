@@ -8,8 +8,9 @@ import 'package:heic_to_jpg/heic_to_jpg.dart';
 import 'package:logger/logger.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:path/path.dart' as p;
-import 'package:retrofitapi_flutter/constants/constants.dart';
-import 'package:retrofitapi_flutter/remote/service/news_services.dart';
+
+import '../../constants/constants.dart';
+import 'news_services.dart';
 
 class ApiClient {
   final dio = Dio();
@@ -48,27 +49,6 @@ class ApiClient {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          if (options.data != null && options.data is FormData) {
-            final FormData data = options.data as FormData;
-            final files = data.files;
-
-            for (int i = 0; i < files.length; i++) {
-              String? path = files[i].value.filename;
-
-              if (path == null) continue;
-
-              if (path.toLowerCase().contains('.heic')) {
-                final pathJpg = await HeicToJpg.convert(path);
-                final name = p.basename(pathJpg!);
-                files[i] = MapEntry(files[i].key,
-                    MultipartFile.fromFileSync(path, filename: name));
-              } else {
-                final name = p.basename(path);
-                files[i] = MapEntry(files[i].key,
-                    MultipartFile.fromFileSync(path, filename: name));
-              }
-            }
-          }
           logger.d(options.data);
           handler.next(options);
         },
